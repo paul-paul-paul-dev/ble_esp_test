@@ -11,6 +11,12 @@
 		B3AFB80B28D8757400FBFC54 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AFB80A28D8757400FBFC54 /* ContentView.swift */; };
 		B3AFB80D28D8757500FBFC54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3AFB80C28D8757500FBFC54 /* Assets.xcassets */; };
 		B3AFB81028D8757500FBFC54 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3AFB80F28D8757500FBFC54 /* Preview Assets.xcassets */; };
+		B3AFB81828D8760200FBFC54 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AFB81728D8760200FBFC54 /* BluetoothManager.swift */; };
+		B3AFB81A28D8843800FBFC54 /* Central.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AFB81928D8843800FBFC54 /* Central.swift */; };
+		B3AFB81C28D8844500FBFC54 /* Peripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AFB81B28D8844500FBFC54 /* Peripheral.swift */; };
+		B3AFB82128D8A31000FBFC54 /* TransferService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3AFB82028D8A31000FBFC54 /* TransferService.swift */; };
+		B3B5A39428DB0D17002CF67D /* PeripheralListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B5A39328DB0D17002CF67D /* PeripheralListItem.swift */; };
+		B3E2125528DB14C0003DF3E2 /* Array+difference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3E2125428DB14C0003DF3E2 /* Array+difference.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +25,12 @@
 		B3AFB80A28D8757400FBFC54 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B3AFB80C28D8757500FBFC54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B3AFB80F28D8757500FBFC54 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B3AFB81728D8760200FBFC54 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
+		B3AFB81928D8843800FBFC54 /* Central.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Central.swift; sourceTree = "<group>"; };
+		B3AFB81B28D8844500FBFC54 /* Peripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peripheral.swift; sourceTree = "<group>"; };
+		B3AFB82028D8A31000FBFC54 /* TransferService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferService.swift; sourceTree = "<group>"; };
+		B3B5A39328DB0D17002CF67D /* PeripheralListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeripheralListItem.swift; sourceTree = "<group>"; };
+		B3E2125428DB14C0003DF3E2 /* Array+difference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+difference.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +63,10 @@
 		B3AFB80728D8757400FBFC54 /* BlueToothESPTest */ = {
 			isa = PBXGroup;
 			children = (
+				B3E2125328DB14AF003DF3E2 /* Extensions */,
+				B3B5A39228DB0D01002CF67D /* Views */,
+				B3AFB81628D875F300FBFC54 /* Bluetooth */,
 				B3AFB80828D8757400FBFC54 /* BlueToothESPTestApp.swift */,
-				B3AFB80A28D8757400FBFC54 /* ContentView.swift */,
 				B3AFB80C28D8757500FBFC54 /* Assets.xcassets */,
 				B3AFB80E28D8757500FBFC54 /* Preview Content */,
 			);
@@ -65,6 +79,34 @@
 				B3AFB80F28D8757500FBFC54 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		B3AFB81628D875F300FBFC54 /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				B3AFB81728D8760200FBFC54 /* BluetoothManager.swift */,
+				B3AFB81928D8843800FBFC54 /* Central.swift */,
+				B3AFB81B28D8844500FBFC54 /* Peripheral.swift */,
+				B3AFB82028D8A31000FBFC54 /* TransferService.swift */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		B3B5A39228DB0D01002CF67D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B3AFB80A28D8757400FBFC54 /* ContentView.swift */,
+				B3B5A39328DB0D17002CF67D /* PeripheralListItem.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B3E2125328DB14AF003DF3E2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B3E2125428DB14C0003DF3E2 /* Array+difference.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +179,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3AFB82128D8A31000FBFC54 /* TransferService.swift in Sources */,
+				B3B5A39428DB0D17002CF67D /* PeripheralListItem.swift in Sources */,
+				B3AFB81C28D8844500FBFC54 /* Peripheral.swift in Sources */,
 				B3AFB80B28D8757400FBFC54 /* ContentView.swift in Sources */,
+				B3AFB81A28D8843800FBFC54 /* Central.swift in Sources */,
+				B3AFB81828D8760200FBFC54 /* BluetoothManager.swift in Sources */,
+				B3E2125528DB14C0003DF3E2 /* Array+difference.swift in Sources */,
 				B3AFB80928D8757400FBFC54 /* BlueToothESPTestApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,11 +318,13 @@
 				DEVELOPMENT_TEAM = 96LQ7G6YRS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Allow this!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -299,11 +349,13 @@
 				DEVELOPMENT_TEAM = 96LQ7G6YRS;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Allow this!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

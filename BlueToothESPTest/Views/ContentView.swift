@@ -10,11 +10,17 @@ import CoreBluetooth
 
 struct ContentView: View {
     
+    @State private var needsUpdate: [MyPeripheral: Bool] = [:]
+    
     @ObservedObject private var bluetoothManager = BluetoothManager()
     
     @State private var isActive: Bool = false
-    
+    @State private var isSorted: Bool = false
     @State private var textToSend: String = ""
+    
+    init(){
+        UIScrollView.appearance().backgroundColor = UIColor.clear
+    }
     
     var appHeader: some View {
         // MARK: Start/Stop Scanning
@@ -34,21 +40,19 @@ struct ContentView: View {
             }.buttonStyle(BorderedButtonStyle())
             Spacer()
             // MARK: Currently selected Characterisic
-            Text(bluetoothManager.connectingChracteristic.uuidString).foregroundColor(.gray).font(.footnote)
+            TextField("Insert Chrateristic ID", text: $bluetoothManager.connectingChracteristic).foregroundColor(.gray).font(.footnote)
         }.padding(.horizontal)
     }
     
     var peripheralList: some View {
         HStack{
-            if let cM = bluetoothManager.centralManager, let sortedPeripherals = bluetoothManager.discoveredPeripherals.sorted {$0.rssi > $1.rssi} {
-                List(sortedPeripherals, id: \.self) { (myPeripheral: MyPeripheral) in
-                    if let name = myPeripheral.name, let isConnected = bluetoothManager.connectedPeripherals.contains(myPeripheral) {
-                        PeripheralListItemView(bluetoothManager: bluetoothManager, cM: cM, myPeripheral: myPeripheral, name: name, isConnected: isConnected, textToSend: textToSend)
+            if let cM = bluetoothManager.centralManager {
+                List(bluetoothManager.discoveredPeripherals.sorted(by: { isSorted ? ($0.rssi > $1.rssi) : ($0.name ?? "Z" > $1.name ?? "A")}) , id: \.self) { (myPeripheral: MyPeripheral) in
+                    if let name = myPeripheral.name {
+                        PeripheralListItemView(bluetoothManager: bluetoothManager, cM: cM, myPeripheral: myPeripheral, name: name, isConnected: myPeripheral.isConnected, textToSend: textToSend)
                     }
                 }
                 .frame(alignment: .top)
-                .padding()
-                .background(.white)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(.gray, lineWidth: 2)
@@ -102,13 +106,19 @@ struct ContentView: View {
                 Spacer()
                 VStack{
                     Button(action: {
-                        bluetoothManager.connectingChracteristic = TransferService.ID.dataUUID
+                        isSorted.toggle()
+                    }) {
+                        Text( isSorted ? "⬇️" : "💙")
+                    }
+                    .buttonStyle(BorderedButtonStyle())
+                    Button(action: {
+                        bluetoothManager.connectingChracteristic = TransferService.ID.dataUUID.uuidString
                     }) {
                         Text("📚")
                     }
                     .buttonStyle(BorderedButtonStyle())
                     Button(action: {
-                        bluetoothManager.connectingChracteristic = TransferService.ID.writeUUID
+                        bluetoothManager.connectingChracteristic = TransferService.ID.writeUUID.uuidString
                     }) {
                         Text("🖋")
                     }

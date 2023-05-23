@@ -11,15 +11,15 @@ import CoreBluetooth
 
 struct PeripheralListItemView: View {
     
-    var bluetoothManager: BluetoothManager
+    @ObservedObject var bluetoothManager: BluetoothManager
     var cM: CBCentralManager
     var myPeripheral: MyPeripheral
     var name: String
     var isConnected: Bool
     var textToSend: String
     
-    @State private var needsUpdate: [MyPeripheral: Bool] = [:]
-    
+    @State var isFlashing: Bool = false
+        
     var peripheralConnection: some View {
         // MARK: Connect Button (Handshake)
         // Connect to / Disconnect from peripheral
@@ -35,19 +35,8 @@ struct PeripheralListItemView: View {
             }).buttonStyle(BorderedButtonStyle())
             
             // MARK: Name of Peripheral
-            Text(name)
-            .onChange(of: bluetoothManager.discoveredPeripherals) { [old = bluetoothManager.discoveredPeripherals] newValue in
-                // Flash the RSSI Value in Green to show that the Value has been updated
-                print("OnChange")
-                if(newValue?.rssi != old?.rssi){
-                    self.needsUpdate[myPeripheral] = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
-                        self.needsUpdate[myPeripheral] = false
-                    }
-                }
-            }
+            Text(name).fontWeight(isConnected ? .bold : .regular)
         }
-        
     }
     
     var dataButtons: some View {
@@ -61,7 +50,6 @@ struct PeripheralListItemView: View {
                 }, label: {
                     Text("📤")
                 }).buttonStyle(BorderedButtonStyle())
-                
                 Button(action: {
                     if let characteristic = bluetoothManager.trChInData {
                         bluetoothManager.readFromPeripheral(peripheral: myPeripheral.peripheral, characteristic:characteristic)
@@ -69,7 +57,22 @@ struct PeripheralListItemView: View {
                 }, label: {
                     Text("📥")
                 }).buttonStyle(BorderedButtonStyle())
-                
+                ScrollView(.horizontal){
+                    HStack{
+                        ForEach(myPeripheral.characteristics, id: \.self){ c in
+                            Button {
+                                if c.isSubscribed {
+                                    bluetoothManager.unsubscribeToCharcteristic(peripheral: myPeripheral.peripheral, characteristic: c.characteristic)
+                                } else {
+                                    bluetoothManager.subscribeToCharcteristic(peripheral: myPeripheral.peripheral, characteristic: c.characteristic)
+                                }
+                                
+                            } label: {
+                                Text(c.characteristic.uuid.uuidString.prefix(4)).fontWeight(c.isSubscribed ? .bold : .regular)
+                            }.buttonStyle(BorderedButtonStyle())
+                        }
+                    }
+                }
             }
         }
     }
@@ -78,8 +81,24 @@ struct PeripheralListItemView: View {
         // MARK: RSSI and Timer value
         // rssi flash in green when updated
         Group{
-            Text(String(myPeripheral.rssi)).foregroundColor((needsUpdate[myPeripheral] ?? false) ? Color.green : Color.black).fontWeight(isConnected ? .bold : .regular)
+            Text(String(myPeripheral.rssi)).foregroundColor(isFlashing ? Color.green : Color.black).fontWeight(isConnected ? .bold : .regular)
             Text("(" +  String(myPeripheral.time) + ")").fontWeight(isConnected ? .bold : .regular)
+                .onChange(of: bluetoothManager.updatedPeripheral) { newValue in
+                    // Flash the RSSI Value in Green to show that the Value has been updated
+                    // Does Not WORK
+                    // TODO: Make it work
+                    // No time anymore to fix this
+                    
+                    /*
+                     if(myPeripheral.uuid == newValue?.uuid){
+                        self.isFlashing = true
+                         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(200)) {
+                             self.isFlashing = false
+                         }
+                    }
+                     */
+                    
+                }
         }
     }
     
